@@ -1,0 +1,8 @@
+eventId,eventStartTime,eventEndTime,eventType,firstName,lastName,emailAddress,willAttend,didAttend,marketingConsent,orderNewsletter
+eb2e3dd6e3ca9d93a83f1234,10-22-2024 17:00:00,06-30-2025 18:45:00,B2C,Kalle,Keksitty,kalle.keksitty@domain.com,True,True,False,Yes.
+ea46723b5bdcec9c9a604789,01-15-2025 08:30:00,01-15-2025 10:30:00,B2B,Erkki,Esimerkki,erkki.esimerkki@example.com,True,True,False,Yes.
+ea46723b5bdcec9c9a604789,01-15-2025 08:30:00,01-15-2025 10:30:00,B2B,John,Doe,john.doe@example.com,True,True,True,Yes.
+ea46723b5bdcec9c9a604789,01-15-2025 08:30:00,01-15-2025 10:30:00,B2B,Matti,Meikalainen,matti.meikalainen@example.com,True,True,True,
+ea46723b5bdcec9c9a604789,01-15-2025 08:30:00,01-15-2025 10:30:00,B2B,Elina,Esimerkkinen,elina.esimerkkinen@example.com,True,False,False,Yes.
+ea46723b5bdcec9c9a604789,01-15-2025 08:30:00,01-15-2025 10:30:00,B2B,Maija,Makila,maija.makila@example.com,True,True,True,Yes.
+ea46723b5bdcec9c9a604789,01-15-2025 08:30:00,01-15-2025 10:30:00,B2B,Johan,Johansson,johan.johansson@example.com,True,True,False,Yes.
