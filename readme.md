@@ -1,6 +1,6 @@
 # 🏆 Luxid Flask Application  
 
-A **Flask-based API client** for the **Luxid Recruitment API**, enabling:
+A **Flask-based API client** for the **Luxid API**, enabling:
 - Authentication using **Bearer Token** (cached with TTL).
 - Fetching **event & participant details**.
 - Processing **hierarchical data** into a structured format.
@@ -14,7 +14,7 @@ A **Flask-based API client** for the **Luxid Recruitment API**, enabling:
 - [🚀 Running with Docker (Recommended)](#-running-with-docker-recommended)  
 - [⚙️ Running Locally (Without Docker)](#-running-locally-without-docker)  
 - [🧪 Running Tests](#-running-tests)  
-- [🖥️ API Endpoints](#-api-endpoints)  
+- [🖥️ API Endpoint](#-api-endpoints)  
 - [🐛 Debugging & Logs](#-debugging--logs)  
 - [📌 Notes](#-notes)  
 
