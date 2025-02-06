@@ -36,30 +36,35 @@ Ensure you have installed:
 
 ## 🚀 **Running with Docker (Recommended)**  
 
+### 1️⃣ Clone the Repository  
 ```sh
-# 1️⃣ Clone the Repository
 git clone https://github.com/YOUR_USERNAME/luxid-flask-app.git
 cd luxid-flask-app
+```
 
-# 2️⃣ Create a .env File
+### 2️⃣ Create a .env File  
+```sh
 echo "LUXID_API_USERNAME=your_username" > .env
 echo "LUXID_API_PASSWORD=your_password" >> .env
+```
 
-# 3️⃣ Build & Run the Application
+### 3️⃣ Build & Run the Application  
+```sh
 docker-compose up --build -d  # Run in detached mode (background)
+```
 
-# 4️⃣ Check Running Containers
+### 4️⃣ Check Running Containers  
+```sh
 docker ps  # Shows running containers
+```
 
-# 5️⃣ Access API
+### 5️⃣ Access API  
+```sh
 curl http://localhost:5000/fetch-participant-info
+```
 
-# This will:
-# ✅ Authenticate and fetch a Bearer Token
-# ✅ Retrieve event & participant data
-# ✅ Save processed data to participants.csv
-
-# 6️⃣ Stop & Remove Containers (when done)
+### 6️⃣ Stop & Remove Containers (when done)  
+```sh
 docker-compose down
 ```
 
@@ -67,32 +72,36 @@ docker-compose down
 
 ## ⚙️ **Running Locally (Without Docker)**  
 
+### 1️⃣ Clone Repository  
 ```sh
-# 1️⃣ Clone Repository
 git clone https://github.com/YOUR_USERNAME/luxid-flask-app.git
-```
-```sh
 cd luxid-flask-app
 ```
-# 2️⃣ Create Virtual Environment
+
+### 2️⃣ Create Virtual Environment  
 ```sh
 python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
+
+### 3️⃣ Install Dependencies  
 ```sh
-source venv/bin/activate  # On Windows: 
-```venv\Scripts\activate
-
-# 3️⃣ Install Dependencies
 pip install -r requirements.txt
+```
 
-# 4️⃣ Create a .env File (if not already created)
+### 4️⃣ Create a .env File (if not already created)  
+```sh
 echo "LUXID_API_USERNAME=your_username" > .env
 echo "LUXID_API_PASSWORD=your_password" >> .env
+```
 
-# 5️⃣ Run Flask Application
+### 5️⃣ Run Flask Application  
+```sh
 python app.py
+```
 
-# API will now be accessible at:
+### API will now be accessible at:  
+```sh
 echo "API running at: http://localhost:5000/fetch-participant-info"
 ```
 
@@ -113,3 +122,4 @@ docker-compose run --rm flask-app pytest -v
 ### ✅ Run Specific Test  
 ```sh
 pytest tests/test_api_client.py -v
+```
