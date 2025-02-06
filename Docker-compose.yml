@@ -6,8 +6,9 @@ services:
     container_name: flask-container
     ports:
       - "5000:5000"
-    environment:
-      - FLASK_DEBUG=true
-      - LUXID_API_USERNAME=ApiUser1
-      - LUXID_API_PASSWORD=1jg91D101d1d01Md1
+    volumes:
+      - .:/app
+    env_file:  
+      - .env
     restart: always
+    working_dir: /app

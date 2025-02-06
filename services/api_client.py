@@ -1,82 +1,74 @@
 import base64
 import requests
-import time
 from cachetools import TTLCache
+from config import USERNAME, PASSWORD
+
+# In-memory cache for storing token
+token_cache = TTLCache(maxsize=100, ttl=60 * 15)  # 15-minute expiry for debugging
 
 class LuxidAPIClient:
     API_BASE_URL = "https://recruiment-api-1069519412575.europe-west3.run.app"
     LOGIN_ENDPOINT = "/login"
 
-    # ✅ Create an in-memory cache with a TTL (time-to-live) of 15 minutes
-    cache = TTLCache(maxsize=1, ttl=900)  # 900 seconds = 15 minutes
-
     def __init__(self, username, password):
         self.username = username
         self.password = password
-        self.ensure_token()  # ✅ Ensure token exists on startup
 
     def authenticate(self):
-        """Fetch a new Bearer token and store it in cache."""
+        """Fetches a new Bearer token and stores it in cache."""
+        print("Requesting new token...", flush=True)
         auth_str = f"{self.username}:{self.password}"
         auth_bytes = base64.b64encode(auth_str.encode()).decode()
         headers = {"Authorization": f"Basic {auth_bytes}"}
 
-        try:
-            print("🔵 Requesting new token...")
-            response = requests.post(self.API_BASE_URL + self.LOGIN_ENDPOINT, headers=headers)
-            response.raise_for_status()
-            data = response.json()
-
-            token = data.get("token")
-            if not token:
-                raise Exception("❌ Token missing in API response!")
-
-            # ✅ Store the token and expiry time BEFORE accessing it
-            self.cache["token"] = token
-            self.cache["token_expiry"] = time.time() + 900  # ✅ Expiry = Now + 15 min
-
-            # ✅ Print only after storing the token
-            print(f"✅ New Token Stored: {token[:30]}... (Expires in 15 min)")
-            return token
-        except requests.exceptions.RequestException as e:
-            print(f"❌ Authentication failed: {e}")
-            raise Exception(f"Failed to authenticate: {e}")
+        response = requests.post(self.API_BASE_URL + self.LOGIN_ENDPOINT, headers=headers)
+        if response.status_code == 200:
+            token = response.json().get("token")
+            if token:
+                token_cache[self.username] = token  # Store token in cache
+                print(f" Token Stored: {token} (Expires in 15 min)", flush=True)
+            else:
+                raise Exception("ERROR: Token was not stored in cache!")
+        else:
+            raise Exception(f"Authentication failed: {response.status_code}")
 
     def ensure_token(self):
-        """Ensure a valid token is available at startup."""
-        try:
-            token = self.cache["token"]
-            token_expiry = self.cache["token_expiry"]
-            if token_expiry < time.time():
-                print("🔄 Token expired. Fetching a new one...")
-                self.authenticate()
-        except KeyError:
-            print("🔄 No token found in cache. Authenticating...")
+        """Ensures a valid token is available before making API calls."""
+        if self.username not in token_cache:
+            print("No valid token found. Authenticating...", flush=True)
             self.authenticate()
+        else:
+            print(f" Using Token: {token_cache[self.username]} (Expires in {int(token_cache.ttl)}s)", flush=True)
 
     def get_headers(self):
-        """Retrieve a valid token from cache or request a new one if expired."""
-        try:
-            token = self.cache["token"]
-            token_expiry = self.cache["token_expiry"]
-
-            if token_expiry < time.time():
-                print("🔄 Token expired. Fetching a new one...")
-                token = self.authenticate()
-        except KeyError:  # ✅ Handle missing token
-            print("🔄 Token missing. Authenticating...")
-            token = self.authenticate()
-
-        return {"Authorization": f"Bearer {token}"}
+        """Returns headers with authentication token."""
+        print(f"Getting headers for {self.username}", flush=True)
+        self.ensure_token()
+        return {"Authorization": f"Bearer {token_cache[self.username]}"}
 
     def fetch_events(self):
-        """Fetch events using a valid Bearer token."""
+        """Fetches event data from the API."""
         headers = self.get_headers()
-        try:
-            print("🔵 Fetching events with headers:", headers)
-            response = requests.get(f"{self.API_BASE_URL}/events", headers=headers)
-            response.raise_for_status()
+        print(f"Fetching events with headers: {headers}", flush=True)
+
+        response = requests.get(f"{self.API_BASE_URL}/events", headers=headers)
+        if response.status_code == 200:
             return response.json()
-        except requests.exceptions.RequestException as e:
-            print(f"❌ Failed to fetch events: {e}")
-            return None
+        else:
+            raise Exception(f"Failed to fetch events: {response.status_code}")
+        
+    def fetch_participants(self, participants_url):
+        """Fetches participants from the given event URL."""
+        headers = self.get_headers()
+        print(f"Fetching participants from: {participants_url}", flush=True)
+
+        response = requests.get(participants_url, headers=headers)
+    
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise Exception(f"Failed to fetch participants: {response.status_code}")
+
+def get_api_client():
+    """Helper function to initialize API client"""
+    return LuxidAPIClient(USERNAME, PASSWORD)

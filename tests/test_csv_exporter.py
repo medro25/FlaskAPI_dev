@@ -5,12 +5,13 @@ from services.csv_exporter import CSVExporter
 class TestCSVExporter(unittest.TestCase):
 
     def setUp(self):
-        self.exporter = CSVExporter("test_participants.csv")
+        self.filename = os.path.join(os.getcwd(), "test_participants.csv")  # Ensure absolute path inside Docker
+        self.exporter = CSVExporter(self.filename)
 
     def tearDown(self):
         """Remove test file after tests."""
-        if os.path.exists("test_participants.csv"):
-            os.remove("test_participants.csv")
+        if os.path.exists(self.filename):
+            os.remove(self.filename)
 
     def test_save_to_csv(self):
         """Test writing data to CSV file."""
@@ -31,8 +32,12 @@ class TestCSVExporter(unittest.TestCase):
         ]
 
         message = self.exporter.save_to_csv(test_data)
-        self.assertTrue(os.path.exists("test_participants.csv"))
-        self.assertEqual(message, "test_participants.csv has been successfully created.")
+
+        print(f"📁 Checking file existence at: {self.filename}")
+        print(f"🔎 Current Working Directory: {os.getcwd()}")
+
+        self.assertTrue(os.path.exists(self.filename))
+        self.assertEqual(message, "CSV file has been successfully created.")
 
 if __name__ == "__main__":
     unittest.main()
