@@ -38,8 +38,7 @@ Ensure you have installed:
 
 ###  Clone the Repository  
 ```sh
-git clone https://github.com/YOUR_USERNAME/luxid-flask-app.git
-cd luxid-flask-app
+https://github.com/medro25/FlaskApp_Luxid
 ```
 
 ###  Create a .env File  
