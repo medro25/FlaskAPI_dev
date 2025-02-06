@@ -40,7 +40,7 @@ class TestEventProcessor(unittest.TestCase):
                     "email": {"answer": "john@example.com"},
                     "98765432": {"answer": {"1": {"choice": "Yes."}}}
                 },
-                "privacy_answers": [{"privacy_policy_id": 7295, "answer": 1}],  # Should set marketingConsent=True
+                "privacy_answers": [{"privacy_policy_id": 7295, "answer": 1}],  
                 "will_attend": 1,
                 "did_attend": 0
             }
@@ -113,7 +113,7 @@ class TestEventProcessor(unittest.TestCase):
         """Test participant processing when some fields are missing."""
         self.mock_api_client.fetch_participants.return_value = {
             "54321": {
-                "answers": {},  # ❌ Missing name, email, etc.
+                "answers": {},  #   Missing name, email, etc.
                 "privacy_answers": [{"privacy_policy_id": 7295, "answer": 1}],  # Marketing consent still True
                 "will_attend": None,
                 "did_attend": None
@@ -147,7 +147,7 @@ class TestEventProcessor(unittest.TestCase):
                     "email": {"answer": "alice@example.com"},
                     "98765432": {"answer": {"1": {"choice": "No."}}}
                 },
-                "privacy_answers": [{"privacy_policy_id": 1015, "answer": 1}],  # ❌ No 7295
+                "privacy_answers": [{"privacy_policy_id": 1015, "answer": 1}],  #   No 7295
                 "will_attend": 0,
                 "did_attend": 1
             }
@@ -162,7 +162,7 @@ class TestEventProcessor(unittest.TestCase):
         self.assertFalse(participant["willAttend"])
         self.assertTrue(participant["didAttend"])
 
-        # ❌ Marketing consent should be False
+        #   Marketing consent should be False
         self.assertFalse(participant["marketingConsent"])
 
 if __name__ == "__main__":

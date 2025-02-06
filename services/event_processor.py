@@ -46,7 +46,7 @@ class EventProcessor:
             if participants_url:
                 self.process_participants(event_id, start_time, end_time, event_type, participants_url)
             else:
-                print(f"⚠️ No participants URL for event {event_id}", flush=True)
+                print(f"  No participants URL for event {event_id}", flush=True)
 
     def process_participants(self, event_id, start_time, end_time, event_type, participants_url):
         """Processes participants for a specific event."""
