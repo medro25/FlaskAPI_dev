@@ -67,7 +67,7 @@ docker-compose down
 
 ## ⚙️ **Running Locally (Without Docker)**  
 
-### 1️⃣ Clone Repository  
+###  Clone Repository  
 ```sh
 git clone https://github.com/YOUR_USERNAME/luxid-flask-app.git
 cd luxid-flask-app
