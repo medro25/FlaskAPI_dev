@@ -11,7 +11,7 @@ api_client = LuxidAPIClient(USERNAME, PASSWORD)
 # Define the file path where CSV will be stored inside the app directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_FILE_PATH = os.path.join(BASE_DIR, "participants.csv")
-print(f"📂 CSV file will be saved in: {CSV_FILE_PATH}", flush=True)  # Debugging
+print(f"  CSV file will be saved in: {CSV_FILE_PATH}", flush=True)  # Debugging
 
 @app.route("/fetch-participant-info", methods=["GET"])
 def fetch_participant_info():

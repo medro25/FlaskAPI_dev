@@ -1,31 +1,36 @@
-# Luxid Flask Application 🚀  
+# 🏆 Luxid Flask Application  
 
-This Flask-based application integrates with the **Luxid Recruitment API** to:  
-- ✅ Authenticate using a **Bearer Token** (cached with TTL)  
-- ✅ Fetch **event & participant details**  
-- ✅ Process **hierarchical data** into a structured format  
-- ✅ Export **participant data to a CSV file**  
-- ✅ Run inside **Docker** for easy setup  
+A **Flask-based API client** for the **Luxid Recruitment API**, enabling:
+- Authentication using **Bearer Token** (cached with TTL).
+- Fetching **event & participant details**.
+- Processing **hierarchical data** into a structured format.
+- Exporting **participant data** to a CSV file.
+- Running inside **Docker** for easy setup.
 
 ---
 
-## 📌 **Table of Contents**  
+## 📑 **Table of Contents**  
 - [🛠 Setup Instructions](#-setup-instructions)  
 - [🚀 Running with Docker (Recommended)](#-running-with-docker-recommended)  
+- [⚙️ Running Locally (Without Docker)](#-running-locally-without-docker)  
 - [🧪 Running Tests](#-running-tests)  
-- [🛠 Running Locally (Without Docker)](#-running-locally-without-docker)  
+- [🖥️ API Endpoints](#-api-endpoints)  
+- [🐛 Debugging & Logs](#-debugging--logs)  
 - [📌 Notes](#-notes)  
-- [🎯 Contributing](#-contributing)  
-- [📝 License](#-license)  
 
 ---
 
 ## 🛠 **Setup Instructions**  
 
-Ensure you have the following installed:  
+### ✅ **Prerequisites**
+Ensure you have installed:  
 - **Python 3.10+** (if running locally)  
 - **Docker & Docker Compose** (recommended for container execution)  
-- **`pip`** (for local package installation)  
+- **`pip`** (for package management)  
+
+### 🌍 **API Access Requirements**
+- You need **valid credentials** (`LUXID_API_USERNAME` and `LUXID_API_PASSWORD`) to authenticate.
+- Ensure you **have an API key** or access rights from Luxid.
 
 ---
 
@@ -37,106 +42,74 @@ git clone https://github.com/YOUR_USERNAME/luxid-flask-app.git
 cd luxid-flask-app
 
 # 2️⃣ Create a .env File
-echo "LUXID_API_USERNAME=ApiUser1" > .env
-echo "LUXID_API_PASSWORD=1jg91D101d1d01Md1" >> .env
-
-# ⚠️ Do NOT commit the .env file to GitHub for security reasons!
+echo "LUXID_API_USERNAME=your_username" > .env
+echo "LUXID_API_PASSWORD=your_password" >> .env
 
 # 3️⃣ Build & Run the Application
-docker-compose up --build
+docker-compose up --build -d  # Run in detached mode (background)
 
-# This will:
-# 🔹 Build the Docker image
-# 🔹 Start the Flask app container
-# 🔹 Mount the local directory into /app inside the container
+# 4️⃣ Check Running Containers
+docker ps  # Shows running containers
 
-# The API will now be accessible at:
-echo "API running at: http://localhost:5000/fetch-participant-info"
-
-# 4️⃣ Fetch Participant Info
+# 5️⃣ Access API
 curl http://localhost:5000/fetch-participant-info
 
 # This will:
-# 🔹 Authenticate and fetch a Bearer Token
-# 🔹 Retrieve event & participant data
-# 🔹 Save processed data to participants.csv
-# Luxid Flask Application 🚀  
+# ✅ Authenticate and fetch a Bearer Token
+# ✅ Retrieve event & participant data
+# ✅ Save processed data to participants.csv
 
-This Flask-based application integrates with the **Luxid Recruitment API** to:  
-- ✅ Authenticate using a **Bearer Token** (cached with TTL)  
-- ✅ Fetch **event & participant details**  
-- ✅ Process **hierarchical data** into a structured format  
-- ✅ Export **participant data to a CSV file**  
-- ✅ Run inside **Docker** for easy setup  
+# 6️⃣ Stop & Remove Containers (when done)
+docker-compose down
+```
 
 ---
 
-## 📌 **Table of Contents**  
-- [🛠 Setup Instructions](#-setup-instructions)  
-- [🚀 Running with Docker (Recommended)](#-running-with-docker-recommended)  
-- [🧪 Running Tests](#-running-tests)  
-- [🛠 Running Locally (Without Docker)](#-running-locally-without-docker)  
-- [📌 Notes](#-notes)  
-- [🎯 Contributing](#-contributing)  
-- [📝 License](#-license)  
-
----
-
-## 🛠 **Setup Instructions**  
-
-Ensure you have the following installed:  
-- **Python 3.10+** (if running locally)  
-- **Docker & Docker Compose** (recommended for container execution)  
-- **`pip`** (for local package installation)  
-
----
-
-## 🚀 **Running with Docker (Recommended)**  
+## ⚙️ **Running Locally (Without Docker)**  
 
 ```sh
-# 1️⃣ Clone the Repository
+# 1️⃣ Clone Repository
 git clone https://github.com/YOUR_USERNAME/luxid-flask-app.git
+```
+```sh
 cd luxid-flask-app
+```
+# 2️⃣ Create Virtual Environment
+```sh
+python -m venv venv
+```
+```sh
+source venv/bin/activate  # On Windows: 
+```venv\Scripts\activate
 
-# 2️⃣ Create a .env File
-echo "LUXID_API_USERNAME=ApiUser1" > .env
-echo "LUXID_API_PASSWORD=1jg91D101d1d01Md1" >> .env
-
-# ⚠️ Do NOT commit the .env file to GitHub for security reasons!
-
-# 3️⃣ Build & Run the Application
-docker-compose up --build
-
-# This will:
-# 🔹 Build the Docker image  
-# 🔹 Start the Flask app container  
-# 🔹 Mount the local directory into `/app` inside the container  
-
-# The API will now be accessible at:
-echo "http://localhost:5000/fetch-participant-info"
-
-# 4️⃣ Fetch Participant Info
-curl http://localhost:5000/fetch-participant-info
-
-# This will:
-# 🔹 Authenticate and fetch a Bearer Token  
-# 🔹 Retrieve event & participant data  
-# 🔹 Save processed data to `participants.csv`
-
-# 🔹 Running Tests Inside Docker  
-docker exec -it flask-container sh -c "PYTHONPATH=/app pytest tests/"
-
-# To run a specific test
-docker exec -it flask-container sh -c "PYTHONPATH=/app pytest tests/test_event_processor.py -k test_extract_event_type_valid"
-# 1️⃣ Create a Virtual Environment
-python3 -m venv venv
-source venv/bin/activate  # (Windows: venv\Scripts\activate)
-
-# 2️⃣ Install Dependencies
+# 3️⃣ Install Dependencies
 pip install -r requirements.txt
 
-# 3️⃣ Run the Flask App
+# 4️⃣ Create a .env File (if not already created)
+echo "LUXID_API_USERNAME=your_username" > .env
+echo "LUXID_API_PASSWORD=your_password" >> .env
+
+# 5️⃣ Run Flask Application
 python app.py
 
-# 4️⃣ Run Tests Locally
-pytest tests/
+# API will now be accessible at:
+echo "API running at: http://localhost:5000/fetch-participant-info"
+```
+
+---
+
+## 🧪 **Running Tests**  
+
+### ✅ Run Tests Locally  
+```sh
+pytest -v
+```
+
+### ✅ Run Tests in Docker  
+```sh
+docker-compose run --rm flask-app pytest -v
+```
+
+### ✅ Run Specific Test  
+```sh
+pytest tests/test_api_client.py -v

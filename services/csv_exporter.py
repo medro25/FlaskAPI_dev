@@ -6,7 +6,7 @@ class CSVExporter:
         # Ensure CSV is saved in the same directory as app.py
         self.base_dir = os.path.dirname(os.path.abspath(__file__))
         self.file_name = os.path.join(self.base_dir, file_name)
-        print(f"📂 CSV will be saved at: {self.file_name}", flush=True)  # Debugging
+        print(f"  CSV will be saved at: {self.file_name}", flush=True)  # Debugging
 
     def save_to_csv(self, data):
         """Saves participant data to CSV."""
@@ -14,7 +14,7 @@ class CSVExporter:
             print("No data to write to CSV.", flush=True)
             raise Exception("No data to write.")
 
-        print("📂 Writing CSV file...", flush=True)
+        print("  Writing CSV file...", flush=True)
 
         fieldnames = [
             "eventId", "eventStartTime", "eventEndTime", "eventType",
