@@ -1,6 +1,6 @@
-# 🏆 Luxid Flask Application  
+# 🏆  Flask API Application  
 
-A **Flask-based API client** for the **Luxid API**, enabling:
+A **Flask-based API client** , enabling:
 - Authentication using **Bearer Token** (cached with TTL).
 - Fetching **event & participant details**.
 - Processing **hierarchical data** into a structured format.
